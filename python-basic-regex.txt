@@ -1,0 +1,86 @@
+#python-basic-regex
+
+result = re.findall(r'(\d+\.\d+\.\d+\.\d+)\s.*?</td>\s.*?<td data-title="PORT">\s.*?(\d\d\d\d)',strings)
+result = re.findall(r'(\d+\.\d+\.\d+\.\d+)\s.*?</td>\s.*?"PORT">\s.*?(\d\d\d\d)',strings)
+
+
+(1) 特殊字符:
+    "."      Matches any character except a newline.(匹配除了新行(或者\n)的所有字符)
+    "^"      Matches the start of the string. (匹配行首)
+    "$"      Matches the end of the string or just before the newline at the end of the string.(匹配行尾，或者仅仅在新行(\n,多行)前的行尾。)
+    "*"      Matches 0 or more (greedy) repetitions of the preceding RE. Greedy means that it will match as many repetitions as possible.(匹配0或者无穷多的前一个字符)
+    "+"      Matches 1 or more (greedy) repetitions of the preceding RE.(匹配1或者无穷大前一个字符。)
+    "?"      Matches 0 or 1 (greedy) of the preceding RE.(匹配0或者1个前一个字符，贪婪的)
+    *?,+?,?? Non-greedy versions of the previous three special characters.(非贪婪模式组合，包括.*?)
+    {m,n}    Matches from m to n repetitions of the preceding RE.(连续m到n前一个字符。)
+    {m,n}?   Non-greedy version of the above.(非贪婪模式的匹配连续m到n前一个字符。可以认为仅匹配最少的m个字符；上一个会匹配n个做大的匹配值。)
+    "\\"     Either escapes special characters or signals a special sequence.()
+    []       Indicates a set of characters. A "^" as the first character indicates a complementing set.(匹配字符集的集合，^开头的会，表示取反。)
+    "|"      A|B, creates an RE that will match either A or B.(匹配取或)
+    (...)    Matches the RE inside the parentheses. The contents can be retrieved or matched later in the string.()
+    (?aiLmsux) Set the A, I, L, M, S, U, or X flag for the RE (see below).(设置flag)
+    (?:...)  Non-grouping version of regular parentheses.(非group模式匹配)
+    (?P<name>...) The substring matched by the group is accessible by name.()
+    (?P=name)     Matches the text matched earlier by the group named name.
+    (?#...)  A comment; ignored.
+    (?=...)  Matches if ... matches next, but doesn't consume the string.
+    (?!...)  Matches if ... doesn't match next.
+    (?<=...) Matches if preceded by ... (must be fixed length).
+    (?<!...) Matches if not preceded by ... (must be fixed length).
+    (?(id/name)yes|no) Matches yes pattern if the group with id/name matched, the (optional) no pattern otherwise.
+	.* 表示任意匹配除换行符（\n、\r）之外的任何单个或多个字符
+
+(2) 
+
+    \number  Matches the contents of the group of the same number.
+    \A       Matches only at the start of the string.
+    \Z       Matches only at the end of the string.
+    \b       Matches the empty string, but only at the start or end of a word.
+    \B       Matches the empty string, but not at the start or end of a word.
+    \d       Matches any decimal digit; equivalent to the set [0-9] in bytes patterns or string patterns with the ASCII flag. In string patterns without the ASCII flag, it will match the whole range of Unicode digits.
+    \D       Matches any non-digit character; equivalent to [^\d].
+    \s       Matches any whitespace character; equivalent to [ \t\n\r\f\v] in bytes patterns or string patterns with the ASCII flag. In string patterns without the ASCII flag, it will match the whole range of Unicode whitespace characters.
+    \S       Matches any non-whitespace character; equivalent to [^\s].
+    \w       Matches any alphanumeric character; equivalent to [a-zA-Z0-9_] in bytes patterns or string patterns with the ASCII flag. In string patterns without the ASCII flag, it will match the range of Unicode alphanumeric characters (letters plus digits plus underscore).
+             With LOCALE, it will match the set [0-9_] plus characters defined as letters for the current locale. 
+	\W       Matches the complement of \w.
+    \\       Matches a literal backslash.
+
+
+(3) fuctions
+This module exports the following functions:
+    match     Match a regular expression pattern to the beginning of a string.
+    fullmatch Match a regular expression pattern to all of a string.
+    search    Search a string for the presence of a pattern.
+    sub       Substitute occurrences of a pattern found in a string.
+    subn      Same as sub, but also return the number of substitutions made.
+    split     Split a string by the occurrences of a pattern.
+    findall   Find all occurrences of a pattern in a string.
+    finditer  Return an iterator yielding a Match object for each match.
+    compile   Compile a pattern into a Pattern object.
+    purge     Clear the regular expression cache.
+    escape    Backslash all non-alphanumerics in a string.
+
+
+3.1 re.findall(pattern, string, flags=0) 方法使用事项
+
+import re
+string="abcdefg  acbdgef  abcdgfe  cadbgfe"
+
+#带括号与不带括号的区别
+#不带括号
+regex=re.compile("((\w+)\s+\w+)")
+print(regex.findall(string))
+#输出：[('abcdefg  acbdgef', 'abcdefg'), ('abcdgfe  cadbgfe', 'abcdgfe')]
+
+regex1=re.compile("(\w+)\s+\w+")
+print(regex1.findall(string))
+#输出：['abcdefg', 'abcdgfe']
+
+regex2=re.compile("\w+\s+\w+")
+print(regex2.findall(string))
+#输出：['abcdefg  acbdgef', 'abcdgfe  cadbgfe']
+
+
+
+https://www.jianshu.com/p/6610c9b13efe
